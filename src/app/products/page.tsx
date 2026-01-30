@@ -32,7 +32,7 @@ function ProductPage(){
     <Header title="Products"></Header>
     <div className="flex justify-center">
         <div className="p-6 max-w-11/12">
-            {/* <h1 className="text-2xl font-bold mb-4 text-center">Products</h1> */}
+            <h1 className="text-2xl text-center mx-auto font-bold sm:text-3xl mb-4">Products</h1>
 
             {/* Card grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
