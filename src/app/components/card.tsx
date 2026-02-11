@@ -18,7 +18,7 @@ function Card({ product, titleStyle }: Props){
             />
             <h3 className={`mt-2 font-semibold ${titleStyle}`}>{product.title}</h3>
             <div className="mt-6 flex items-center justify-between">
-                <p className="text-gray-600">${product.price}</p>
+                <p className="text-gray-400">${product.price}</p>
                 <button
                     // TODO CONTEXT 9: Implement onClick to add item
                     // onClick={() => addItem({ id, name, price })}

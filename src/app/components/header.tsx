@@ -8,23 +8,13 @@ import { getSession } from "@/lib/auth";
 
 type HeaderProps = {
   showBack?: boolean
-  prevPage?: string
+  isLoggedIn: boolean
 };
 
-function Header({showBack = false}: HeaderProps) {
+function Header({showBack = false, isLoggedIn}: HeaderProps) {
   const router = useRouter()
   
   const [isPending, startTransition] = useTransition();
-  const [isLoggedIn, setIsLoggedIn] = useState(Boolean);
-
-  useEffect(() => {
-    async function getLoggedIn() {
-      const session = await getSession();
-      setIsLoggedIn(await !!session?.name)
-    }
-
-    getLoggedIn()
-  }, [])
 
   return (
     <header className="mb-6 flex items-center gap-4 py-4 border-b-2">
@@ -36,13 +26,14 @@ function Header({showBack = false}: HeaderProps) {
         >
           Back
         </button>
-      )}{}
+      )}
       
       <nav className="p-6 w-full mx-auto">
         <div className="flex justify-between">
           <Link href={'/products'} className="text-2xl font-bold sm:text-3xl">RevoShop</Link>
           <div className="content-center">
-            <Link href={'/FAQ'} className="text-lg font-bold sm:text-xl">FAQ</Link>
+            <Link href={'/add-product'} className="text-lg font-bold sm:text-xl mx-4">Add Product</Link>
+            <Link href={'/FAQ'} className="text-lg font-bold sm:text-xl mx-4">FAQ</Link>
           </div>
         </div>
       </nav>
@@ -51,11 +42,18 @@ function Header({showBack = false}: HeaderProps) {
         <button
           onClick={() => startTransition(() => logoutAction())}
           disabled={isPending}
-          className="rounded bg-red-600 px-4 py-2 mr-5 text-sm font-semibold text-white transition-colors hover:bg-red-500 disabled:opacity-50"
+          className="rounded bg-red-600 p-4 py-2 mr-5 text-sm font-semibold text-white transition-colors hover:bg-red-500"
         >
           {isPending ? 'Logging out...' : 'Logout'}
         </button>
-      )}{}
+      ) || (
+        <Link
+          href="/login"
+          className="rounded font-bold bg-gray-600 px-4 py-2 mr-5 text-sm text-white hover:bg-gray-400"
+        >
+          Login
+        </Link>
+      )}
     </header>
   );
 }

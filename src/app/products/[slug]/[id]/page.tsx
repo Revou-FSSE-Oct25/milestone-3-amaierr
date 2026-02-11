@@ -1,6 +1,6 @@
-import Card from "@/app/components/card";
 import Header from "@/app/components/header";
 import { Product } from "@/app/types/products";
+import { getSession } from "@/lib/auth";
 
 type PageProps = {
   params: Promise<{
@@ -13,6 +13,9 @@ var product: Product;
 
 async function DetailPage({ params }: PageProps) {
     const { slug, id } = await params
+    const session = await getSession()
+    
+    const isLoggedIn = !!session
 
     const res = await fetch(
       `https://api.escuelajs.co/api/v1/products/${id}`,
@@ -22,7 +25,7 @@ async function DetailPage({ params }: PageProps) {
     product = await res.json()
 
     return <>
-      <Header showBack ></Header>
+      <Header showBack isLoggedIn={isLoggedIn}></Header>
       <section className="max-w-7xl mx-auto px-6 py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           
