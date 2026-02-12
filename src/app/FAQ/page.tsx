@@ -27,7 +27,7 @@ async function FAQPage() {
     const isLoggedIn = !!session
 
     return <>
-        <Header showBack isLoggedIn={isLoggedIn}></Header>
+        <Header isLoggedIn={isLoggedIn}></Header>
         <div className="p-6 max-w-3xl mx-auto">
             <h1 className="text-3xl font-bold mb-6">Frequently Asked Questions</h1>
 

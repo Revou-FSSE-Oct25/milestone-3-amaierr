@@ -4,7 +4,6 @@ import { getSession } from "@/lib/auth";
 
 type PageProps = {
   params: Promise<{
-    slug: string
     id: string
   }>
 }
@@ -12,20 +11,25 @@ type PageProps = {
 var product: Product;
 
 async function DetailPage({ params }: PageProps) {
-    const { slug, id } = await params
+    const { id } = await params
     const session = await getSession()
     
     const isLoggedIn = !!session
 
-    const res = await fetch(
-      `https://api.escuelajs.co/api/v1/products/${id}`,
-      { cache: "no-store" }
-    )
+    try{
+      const res = await fetch(
+        `https://api.escuelajs.co/api/v1/products/${id}`,
+        { cache: "no-store" }
+      )
+      
+      product = await res.json()
+    } catch(error){
+      throw new Error(`HTTP error! status: ${error}`);
+    }
 
-    product = await res.json()
 
     return <>
-      <Header showBack isLoggedIn={isLoggedIn}></Header>
+      <Header isLoggedIn={isLoggedIn}></Header>
       <section className="max-w-7xl mx-auto px-6 py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           
