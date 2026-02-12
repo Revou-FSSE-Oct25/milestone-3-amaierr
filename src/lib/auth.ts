@@ -1,3 +1,5 @@
+import { LoginData } from '@/app/login/actions';
+import axios from 'axios';
 import { cookies } from 'next/headers';
 
 // TODO 1: Setup Mock Authentication
@@ -10,33 +12,34 @@ export type UserRole = 'admin' | 'user' | 'guest';
 
 // Simple mock user interface
 export interface User {
-  id: string;
-  name: string;
-  role: UserRole;
+  id: string
+  name: string
+  role: string
 }
 
-export async function login(role: UserRole) {
-  // In a real app, you would validate credentials here
-  const user: User = {
-    id: crypto.randomUUID(),
-    name: role === 'admin' ? 'Admin User' : 'Standard User',
-    role,
-  };
+interface Auth {
+  access_token: string
+  refresh_token: string
+}
+
+export async function login(data: LoginData) {
+  var auth 
+  await axios.post<Auth>('https://api.escuelajs.co/api/v1/auth/login', data)
+        .then((response) => (auth = response.data))
+        .catch((error) => {throw new Error(error.response.data.message)})
 
   // Create a session (mock)
-  const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 1 day
   const cookieStore = await cookies();
   
   // Storing simple JSON in cookie for this demo
-  cookieStore.set(AUTH_COOKIE, JSON.stringify(user), {
+  cookieStore.set(AUTH_COOKIE, auth!.access_token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    expires,
     sameSite: 'lax',
     path: '/',
   });
 
-  return user;
+  return auth
 }
 
 export async function logout() {
@@ -51,8 +54,14 @@ export async function getSession(): Promise<User | null> {
   if (!token) return null;
 
   try {
-    return JSON.parse(token.value) as User;
+    const response = await axios.get<User>('https://api.escuelajs.co/api/v1/auth/profile', {
+        headers: {
+          'Authorization': `Bearer ${token.value}`
+        }
+      })
+    return response.data;
   } catch {
     return null;
   }
+  
 }

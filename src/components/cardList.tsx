@@ -4,8 +4,13 @@ import { useEffect } from "react"
 import { useProductStore } from "../store/useProductStore"
 import Card from "./card"
 import Link from "next/link"
+import { ListPlus } from "lucide-react"
 
-function CardList() {
+type CardListProps = {
+    isAdmin: boolean
+  };
+
+function CardList({isAdmin}: CardListProps) {
 const {
         products,
         loading,
@@ -27,7 +32,18 @@ const {
     return <>
         <div className="flex justify-center">
             <div className="p-6 max-w-11/12">
-                <h1 className="text-2xl text-center mx-auto font-bold sm:text-3xl mb-4">Products</h1>
+                <div className="flex">
+                    <h1 className="text-2xl text-center mx-auto font-bold sm:text-3xl mb-4">Products</h1>
+                    
+                    {/* add product icon */}
+                    {isAdmin && (
+                        <Link href={'/add-product'}>
+                            <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center shadow-lg hover:bg-zinc-600">
+                                <ListPlus size={21}/>
+                            </div>
+                        </Link>
+                    )}
+                </div>
 
                 {/* Card grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">

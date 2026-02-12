@@ -3,30 +3,26 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Category } from "../types/category";
+import { Category } from "../../types/category";
 import { useRouter } from "next/navigation";
 
 function AddProductPage() {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm();
     const router = useRouter();
     const onSubmit = () => {
-        console.log(getValues(["Title", "Description", "Image", "Price", "Category"]))
-        try{
-            axios.post('https://api.escuelajs.co/api/v1/products/', {
-                title: getValues("Title"),
-                price: getValues("Price"),
-                description: getValues("Description"),
-                categoryId: getValues("Category"),
-                images: getValues(["Image"])
-            })
-        } catch (err){
-            
-        } finally{
+        axios.post('https://api.escuelajs.co/api/v1/products/', {
+            title: getValues("Title"),
+            price: getValues("Price"),
+            description: getValues("Description"),
+            categoryId: getValues("Category"),
+            images: getValues(["Image"])
+        }).then( () => {
             router.push('/products');
-        }
+        }).catch( (error) => {
+            console.log(error.message)
+        })
     }
     const [categories, setCategories] = useState<Category[]>([])
-    console.log(errors)
 
     useEffect(() => {
         async function fetchData(){

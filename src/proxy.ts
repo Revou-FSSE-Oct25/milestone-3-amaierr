@@ -1,18 +1,14 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { AUTH_COOKIE, User } from './lib/auth';
+import axios from 'axios';
 
-// TODO 2: Configure Route Protection (Proxy)
-// This file intercepts EVERY request. We can check cookies here to decide
-// if a user is allowed to visit a page.
-
-// Define which routes need what permissions
 const PROTECTED_ROUTES = {
-  '/dashboard': ['user', 'admin'], // Both User and Admin can see dashboard
-  '/private': ['admin'],           // Only Admin can see private
+  '/profile': ['customer', 'admin'], 
+  '/private': ['admin'],
 } as const
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   
   // 1. Check if user is authenticated
@@ -21,7 +17,11 @@ export function proxy(request: NextRequest) {
   
   if (authCookie) {
     try {
-      user = JSON.parse(authCookie.value)
+      await axios.get<User>('https://api.escuelajs.co/api/v1/auth/profile', {
+        headers: {
+          'Authorization': `Bearer ${authCookie.value}`
+        }
+      }).then((response) => {user = response.data})
     } catch {
       // Invalid cookie
     }
@@ -29,9 +29,7 @@ export function proxy(request: NextRequest) {
 
   const isLoggedIn = !!user
 
-  // 2. Handle Login Page Redirection
-  // If user is already logged in and tries to access login page, redirect to dashboard
-  if (isLoggedIn && pathname === '/login') {
+  if (isLoggedIn && pathname === '/login' || pathname === '/sign-up') {
     return NextResponse.redirect(new URL('/products', request.url))
   }
 

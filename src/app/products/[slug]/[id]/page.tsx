@@ -1,6 +1,5 @@
-import Header from "@/app/components/header";
-import { Product } from "@/app/types/products";
-import { getSession } from "@/lib/auth";
+import Header from "@/components/header";
+import { Product } from "@/types/products";
 
 type PageProps = {
   params: Promise<{
@@ -12,9 +11,6 @@ var product: Product;
 
 async function DetailPage({ params }: PageProps) {
     const { id } = await params
-    const session = await getSession()
-    
-    const isLoggedIn = !!session
 
     try{
       const res = await fetch(
@@ -29,7 +25,7 @@ async function DetailPage({ params }: PageProps) {
 
 
     return <>
-      <Header isLoggedIn={isLoggedIn}></Header>
+      <Header></Header>
       <section className="max-w-7xl mx-auto px-6 py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           

@@ -1,15 +1,21 @@
 'use server';
 
 import { login as authLogin, UserRole } from '@/lib/auth';
+import axios from 'axios';
 import { redirect } from 'next/navigation';
 
-// TODO 3: Server Actions for Login/Logout
-// Server actions allow us to run code on the server directly from the UI.
-// Here we set the cookie and redirect the user.
+export type LoginData = {
+  email: string
+  password: string
+}
 
-export async function loginAction(role: UserRole, callbackUrl: string = '/dashboard') {
-  await authLogin(role);
-  redirect(callbackUrl);
+export async function loginAction(data: LoginData) {
+  try {
+    await authLogin(data);
+    return { success: true };
+  } catch (error: any) {
+    return { success: false, message: error.message };
+  }
 }
 
 export async function logoutAction() {

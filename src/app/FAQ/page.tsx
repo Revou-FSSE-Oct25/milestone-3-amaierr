@@ -1,5 +1,4 @@
-import { getSession } from "@/lib/auth"
-import Header from "../components/header"
+import Header from "../../components/header"
 
 export const dynamic = 'force-static'
 
@@ -21,13 +20,10 @@ async function getFAQs(): Promise<FAQ[]> {
 }
 
 async function FAQPage() {
-    const faqs = await getFAQs()
-    const session = await getSession()
-    
-    const isLoggedIn = !!session
+    const faqs = await getFAQs() 
 
     return <>
-        <Header isLoggedIn={isLoggedIn}></Header>
+        <Header></Header>
         <div className="p-6 max-w-3xl mx-auto">
             <h1 className="text-3xl font-bold mb-6">Frequently Asked Questions</h1>
 
