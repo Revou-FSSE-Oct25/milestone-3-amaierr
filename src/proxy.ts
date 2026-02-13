@@ -29,7 +29,7 @@ export async function proxy(request: NextRequest) {
 
   const isLoggedIn = !!user
 
-  if (isLoggedIn && pathname === '/login' || pathname === '/sign-up') {
+  if (isLoggedIn && (pathname === '/login' || pathname === '/sign-up')) {
     return NextResponse.redirect(new URL('/products', request.url))
   }
 

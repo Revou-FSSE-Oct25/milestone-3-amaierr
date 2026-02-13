@@ -90,10 +90,6 @@ function LoginForm() {
               placeholder=" "
               {...register('password', {
                 required: 'Password is required',
-                minLength: {
-                  value: 6,
-                  message: 'Minimum 6 characters',
-                },
               })}
               disabled={isPending}
               className={`peer w-full rounded-lg bg-zinc-800 border px-4 pt-6 pb-2 text-white outline-none transition
@@ -127,7 +123,7 @@ function LoginForm() {
 
         <p className="mt-6 text-sm text-zinc-400 text-center">
           Don’t have an account?{' '}
-          <Link href="/signup" className="text-white hover:underline">
+          <Link href="/sign-up" className="text-white hover:underline">
             Sign up
           </Link>
         </p>

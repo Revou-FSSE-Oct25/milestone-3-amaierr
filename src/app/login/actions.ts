@@ -1,7 +1,6 @@
 'use server';
 
-import { login as authLogin, UserRole } from '@/lib/auth';
-import axios from 'axios';
+import { login as authLogin } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 
 export type LoginData = {

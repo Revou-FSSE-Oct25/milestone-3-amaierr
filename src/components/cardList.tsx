@@ -8,7 +8,7 @@ import { ListPlus } from "lucide-react"
 
 type CardListProps = {
     isAdmin: boolean
-  };
+};
 
 function CardList({isAdmin}: CardListProps) {
 const {
