@@ -1,4 +1,4 @@
-import Header from "../../components/header"
+import BackButton from "@/components/backButton"
 
 export const dynamic = 'force-static'
 
@@ -23,7 +23,10 @@ async function FAQPage() {
     const faqs = await getFAQs() 
 
     return <>
-        <Header></Header>
+        <div className="mb-6 flex items-center gap-4 py-4">
+            <BackButton/>
+        </div>
+
         <div className="p-6 max-w-3xl mx-auto">
             <h1 className="text-3xl font-bold mb-6">Frequently Asked Questions</h1>
 

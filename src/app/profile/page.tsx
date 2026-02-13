@@ -1,6 +1,6 @@
 'use client';
 
-import { useTransition } from 'react';
+import { Suspense, useTransition } from 'react';
 import { logoutAction } from '../login/actions';
 import { useSearchParams } from 'next/navigation';
 import BackButton from '@/components/backButton';
@@ -12,7 +12,15 @@ type User = {
   avatar: string | null;
 };
 
-export default function ProfilePage() {
+export default function ProfilePage(){
+  return (
+    <Suspense>
+      <Profile/>
+    </Suspense>
+  )
+}
+
+function Profile() {
 
   const [isPending, startTransition] = useTransition();
   const searchParams = useSearchParams()
@@ -35,6 +43,7 @@ export default function ProfilePage() {
         <div className="mb-6 flex items-center gap-4 py-4">
             <BackButton/>
         </div>
+        
         <div className="min-h-screen bg-[#09090b] flex items-center justify-center px-6 py-12 text-zinc-200">
         <div className="w-full max-w-md bg-zinc-900/70 backdrop-blur-xl border border-zinc-800 rounded-2xl p-8 shadow-2xl">
             
