@@ -17,11 +17,12 @@ export async function proxy(request: NextRequest) {
   
   if (authCookie) {
     try {
-      await axios.get<User>('https://api.escuelajs.co/api/v1/auth/profile', {
+      const response = await axios.get<User>('https://api.escuelajs.co/api/v1/auth/profile', {
         headers: {
           'Authorization': `Bearer ${authCookie.value}`
         }
-      }).then((response) => {user = response.data})
+      })
+      user = response.data
     } catch {
       // Invalid cookie
     }
