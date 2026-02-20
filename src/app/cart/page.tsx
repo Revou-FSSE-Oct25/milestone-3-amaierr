@@ -1,19 +1,32 @@
 'use client';
 
+import { useCartStore } from '@/store/useCartStore';
 // import { useCart } from '@/context/CartContext';
 import { ShoppingBag, Trash2, StickyNote } from 'lucide-react';
+import { useEffect } from 'react';
 
 export default function CartPage() {
   // TODO CONTEXT 10: Connect to Cart Context
   // const { items, cartNote, updateCartNote, removeItem, total, clearCart } = useCart();
   
   // MOCK DATA for Starter
-  const items: any[] = [];
-  const cartNote = "";
-  const total = 0;
-  const updateCartNote = (note: string) => {};
-  const removeItem = (id: string) => {};
-  const clearCart = () => {};
+  // const items: any[] = [];
+  // const cartNote = "";
+  // const total = 0;
+  // const updateCartNote = (note: string) => {};
+  // const removeItem = (id: string) => {};
+  // const clearCart = () => {};
+
+  const {
+    items,
+    total,
+    addItem,
+    removeItem
+  } = useCartStore()
+
+  // useEffect(() => {
+  //   console.log(items)
+  // }, [addItem, items])
 
   return (
     <div className="min-h-screen text-zinc-200 px-6 py-12">
@@ -23,45 +36,54 @@ export default function CartPage() {
         <div className="lg:col-span-2 bg-zinc-800 backdrop-blur rounded-2xl p-8 border border-zinc-700 shadow-xl">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-2xl font-semibold">Shopping Cart</h1>
-            <span className="text-sm text-zinc-400">3 Items</span>
+            <span className="text-sm text-zinc-400">{total} Items</span>
           </div>
 
           <div className="space-y-8">
             
             {/* ITEM */}
-            {[1,2,3].map((item) => (
-              <div key={item} className="flex gap-6 border-b border-zinc-300 pb-6">
+            {items.map((item) => (
+              <div key={item.product.id} className="flex gap-6 border-b border-zinc-300 pb-6">
                 
                 <img
-                  src="https://via.placeholder.com/100"
+                  src={item.product.images[0]}
                   alt="Product"
                   className="w-24 h-24 rounded-lg object-cover border border-zinc-400"
                 />
 
                 <div className="flex-1">
-                  <h2 className="font-medium text-lg">Product Name</h2>
-                  <p className="text-sm text-zinc-400/80 mb-3">PS4</p>
+                  <h2 className="font-medium text-lg">{item.product.title}</h2>
+                  <p className="text-sm text-zinc-400/80 mb-3">{item.product.category.name}</p>
 
-                  <button className="text-sm text-red-500 hover:text-red-400 transition">
+                  <button 
+                    className="text-sm text-red-500 hover:text-red-400 transition"
+                    onClick={() => removeItem(item.product.id)}
+                  >
                     Remove
                   </button>
                 </div>
 
                 {/* Quantity */}
                 <div className="flex items-center gap-3">
-                  <button className="w-8 h-8 flex items-center justify-center rounded-md bg-zinc-600 hover:bg-zinc-700 transition">
+                  <button 
+                    className="w-8 h-8 flex items-center justify-center rounded-md bg-zinc-600 hover:bg-zinc-700 transition"
+                    onClick={() => addItem({product: item.product, quantity: -1})}
+                  >
                     -
                   </button>
-                  <span className="w-8 text-center">1</span>
-                  <button className="w-8 h-8 flex items-center justify-center rounded-md bg-zinc-600 hover:bg-zinc-700 transition">
+                  <span className="w-8 text-center">{item.quantity}</span>
+                  <button 
+                    className="w-8 h-8 flex items-center justify-center rounded-md bg-zinc-600 hover:bg-zinc-700 transition" 
+                    onClick={() => addItem({product: item.product, quantity: 1})}
+                  >
                     +
                   </button>
                 </div>
 
                 {/* Price */}
                 <div className="text-right min-w-25">
-                  <p className="text-sm text-zinc-400">$120.00</p>
-                  <p className="font-semibold">$120.00</p>
+                  <p className="text-sm text-zinc-400">${item.product.price}</p>
+                  <p className="font-semibold">${item.product.price * item.quantity}</p>
                 </div>
               </div>
             ))}
@@ -81,13 +103,8 @@ export default function CartPage() {
 
           <div className="space-y-4 text-sm">
             <div className="flex justify-between text-zinc-400">
-              <span>Items (3)</span>
+              <span>Items ({total})</span>
               <span>$457.98</span>
-            </div>
-
-            <div className="flex justify-between text-zinc-400">
-              <span>Shipping</span>
-              <span>$5.00</span>
             </div>
 
             {/* Total */}

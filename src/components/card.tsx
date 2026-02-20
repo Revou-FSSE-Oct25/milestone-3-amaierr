@@ -1,6 +1,9 @@
-import Link from "next/link";
+'use client'
+
 import { Product } from "../types/products";
 import { Plus } from "lucide-react";
+import { useCartStore } from "@/store/useCartStore";
+import { MouseEvent, useEffect } from "react";
 
 type Props = {
     product: Product
@@ -9,6 +12,23 @@ type Props = {
 
 function Card({ product, titleStyle }: Props){
 
+    const {
+        items,
+        total,
+        addItem,
+        removeItem
+    } = useCartStore()
+
+    // useEffect(() => {
+    //     console.log(items)
+    //     console.log(total)
+    // }, [total])
+
+    function onClickAdd(e: MouseEvent<HTMLButtonElement | HTMLSpanElement>){
+        e.preventDefault()
+        e.stopPropagation()
+        addItem({product, quantity: 1})
+    }
     return <>
         <div className="border rounded-lg p-6 m-4">
             <img
@@ -21,7 +41,7 @@ function Card({ product, titleStyle }: Props){
                 <p className="text-gray-400">${product.price}</p>
                 <button
                     // TODO CONTEXT 9: Implement onClick to add item
-                    // onClick={() => addItem({ id, name, price })}
+                    onClick= {onClickAdd}
                     className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-950 transition-transform hover:scale-110 active:scale-95"
                 >
                     <Plus className="h-5 w-5" />
