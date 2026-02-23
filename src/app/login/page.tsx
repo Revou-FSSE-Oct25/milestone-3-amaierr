@@ -68,12 +68,7 @@ function LoginForm() {
                   : 'border-zinc-700 focus:border-white'}
               `}
             />
-            <label className="absolute left-4 top-2 text-sm text-zinc-400 transition-all
-              peer-placeholder-shown:top-4
-              peer-placeholder-shown:text-base
-              peer-focus:top-2
-              peer-focus:text-sm
-              peer-focus:text-white">
+            <label className="absolute left-4 top-2 text-sm text-zinc-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm peer-focus:text-white">
               Email
             </label>
             {errors.email && (
@@ -98,11 +93,7 @@ function LoginForm() {
                   : 'border-zinc-700 focus:border-white'}
               `}
             />
-            <label className="absolute left-4 top-2 text-sm text-zinc-400 transition-all peer-placeholder-shown:top-4
-              peer-placeholder-shown:text-base
-              peer-focus:top-2
-              peer-focus:text-sm
-              peer-focus:text-white">
+            <label className="absolute left-4 top-2 text-sm text-zinc-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm peer-focus:text-white">
               Password
             </label>
             {errors.password && (
@@ -127,6 +118,12 @@ function LoginForm() {
             Sign up
           </Link>
         </p>
+
+        <div className='mt-3 text-center'>
+          <Link href="/products" className="text-white hover:underline">
+            Login as Guess
+          </Link>
+        </div>
 
         {errors.root && (
           <p className="text-sm text-red-500 text-center">

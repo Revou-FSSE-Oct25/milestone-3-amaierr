@@ -1,25 +1,13 @@
 'use client';
 
 import { useCartStore } from '@/store/useCartStore';
-// import { useCart } from '@/context/CartContext';
-import { ShoppingBag, Trash2, StickyNote } from 'lucide-react';
-import { useEffect } from 'react';
 
 export default function CartPage() {
-  // TODO CONTEXT 10: Connect to Cart Context
-  // const { items, cartNote, updateCartNote, removeItem, total, clearCart } = useCart();
-  
-  // MOCK DATA for Starter
-  // const items: any[] = [];
-  // const cartNote = "";
-  // const total = 0;
-  // const updateCartNote = (note: string) => {};
-  // const removeItem = (id: string) => {};
-  // const clearCart = () => {};
 
   const {
     items,
-    total,
+    totalQuantity,
+    totalPrice,
     addItem,
     removeItem
   } = useCartStore()
@@ -36,7 +24,7 @@ export default function CartPage() {
         <div className="lg:col-span-2 bg-zinc-800 backdrop-blur rounded-2xl p-8 border border-zinc-700 shadow-xl">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-2xl font-semibold">Shopping Cart</h1>
-            <span className="text-sm text-zinc-400">{total} Items</span>
+            <span className="text-sm text-zinc-400">{totalQuantity} Items</span>
           </div>
 
           <div className="space-y-8">
@@ -103,14 +91,14 @@ export default function CartPage() {
 
           <div className="space-y-4 text-sm">
             <div className="flex justify-between text-zinc-400">
-              <span>Items ({total})</span>
-              <span>$457.98</span>
+              <span>Items ({totalQuantity})</span>
+              <span>${totalPrice}</span>
             </div>
 
             {/* Total */}
             <div className="pt-6 border-t border-zinc-300 flex justify-between font-semibold text-base">
               <span>Total</span>
-              <span>$462.98</span>
+              <span>${totalPrice}</span>
             </div>
 
             <button className="mt-6 w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition font-medium shadow-lg shadow-indigo-600/20">

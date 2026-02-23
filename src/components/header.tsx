@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ShoppingCart, User } from "lucide-react";
+import { User } from "lucide-react";
 import BackButton from "./backButton";
 import { getSession } from "@/lib/auth";
+import CartButton from "./cartButton";
 
 async function Header() {  
   const session = await getSession()
@@ -11,7 +12,7 @@ async function Header() {
       <BackButton/>
       <div className="p-6 w-full mx-auto">
         <div className="flex justify-between items-center">
-          <div className="flex min-w-1/2 justify-between items-center">
+          <div className="flex min-w-8/15 justify-between items-center">
             <Link href={'/products'} className="text-2xl font-bold sm:text-3xl">RevoShop</Link>
             
             {/* navigation */}
@@ -24,26 +25,16 @@ async function Header() {
           {/* icon */}
           <div className="flex gap-3 items-center">
             {/* shopping cart icon */}
-            <Link href={'/cart'}>
-              <div className="relative inline-flex">
-                <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center shadow-lg hover:bg-zinc-600">
-                    <ShoppingCart size={21}/>
-                </div>
-
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold w-4 h-4 rounded-full flex items-center justify-center shadow-md">
-                  2
-                </span>
-              </div>
-            </Link>
+            <CartButton/>
 
             {/* user icon */}
             <Link href={{
               pathname: '/profile',
               query: { 
-                name: session!.name,
-                email: session!.email,
-                role: session!.role,
-                avatar: session!.avatar
+                name: session?.name,
+                email: session?.email,
+                role: session?.role,
+                avatar: session?.avatar
               },
             }}>
               <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center shadow-lg hover:bg-zinc-600">

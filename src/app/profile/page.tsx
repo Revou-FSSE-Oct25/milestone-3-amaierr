@@ -4,13 +4,8 @@ import { Suspense, useTransition } from 'react';
 import { logoutAction } from '../login/actions';
 import { useSearchParams } from 'next/navigation';
 import BackButton from '@/components/backButton';
+import { User } from '@/lib/auth';
 
-type User = {
-  name: string | null;
-  email: string | null;
-  role: string | null;
-  avatar: string | null;
-};
 
 export default function ProfilePage(){
   return (
@@ -26,10 +21,10 @@ function Profile() {
   const searchParams = useSearchParams()
 
   const user: User = {
-    name: searchParams.get("name"),
-    email: searchParams.get("email"),
-    role: searchParams.get("role"),
-    avatar: searchParams.get("avatar")
+    name: searchParams.get("name") || "user",
+    email: searchParams.get("email") || "",
+    role: searchParams.get("role") || "",
+    avatar: searchParams.get("avatar") || ""
   }
 
   const handleLogout = () => {
