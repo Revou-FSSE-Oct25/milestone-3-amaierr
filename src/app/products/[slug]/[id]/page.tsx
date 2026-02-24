@@ -1,5 +1,8 @@
+import AddToCart from "@/components/addToCart";
 import Header from "@/components/header";
+import Loading from "@/components/loading";
 import { Product } from "@/types/products";
+import { Suspense } from "react";
 
 type PageProps = {
   params: Promise<{
@@ -24,7 +27,7 @@ async function DetailPage({ params }: PageProps) {
     }
 
 
-    return <>
+    return <Suspense fallback={<Loading/>}>
       <Header></Header>
       <section className="max-w-7xl mx-auto px-6 py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -60,15 +63,12 @@ async function DetailPage({ params }: PageProps) {
 
             {/* ACTIONS */}
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              {/* ADD TO CART */}
-              <button className="flex-1 flex items-center justify-center gap-3 rounded-lg bg-orange-500 px-6 py-4 text-white font-semibold hover:bg-orange-600 transition">
-                🛒 Add to cart
-              </button>
+              <AddToCart product = {product}/>
             </div>
           </div>
         </div>
       </section>
-    </>
+    </Suspense>
 }
 
 export default DetailPage

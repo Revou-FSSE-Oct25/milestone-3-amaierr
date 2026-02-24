@@ -1,4 +1,6 @@
 import BackButton from "@/components/backButton"
+import Loading from "@/components/loading"
+import { Suspense } from "react"
 
 export const dynamic = 'force-static'
 
@@ -22,7 +24,7 @@ async function getFAQs(): Promise<FAQ[]> {
 async function FAQPage() {
     const faqs = await getFAQs() 
 
-    return <>
+    return <Suspense fallback={<Loading/>}>
         <div className="mb-6 flex items-center gap-4 py-4">
             <BackButton/>
         </div>
@@ -39,7 +41,7 @@ async function FAQPage() {
                 ))}
             </ul>
         </div>
-    </>
+    </Suspense>
     
 }
 

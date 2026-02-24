@@ -11,6 +11,7 @@ type ProductState = {
     error: string | null
     hasMore: boolean
     fetchProducts: () => Promise<void>
+    clearProducts: () => Promise<void>
 }
 
 export const useProductStore = create<ProductState>((set, get) => ({
@@ -48,4 +49,11 @@ export const useProductStore = create<ProductState>((set, get) => ({
             set({ loading: false })
         }
     },
+
+    clearProducts: async () =>{
+        set({
+            products: [],
+            page: 1,
+        })
+    }
   }))

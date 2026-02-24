@@ -11,7 +11,7 @@ type CardListProps = {
 };
 
 function CardList({isAdmin}: CardListProps) {
-const {
+    const {
         products,
         loading,
         error,

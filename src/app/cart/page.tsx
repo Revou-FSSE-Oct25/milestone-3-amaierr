@@ -1,6 +1,7 @@
 'use client';
 
 import { useCartStore } from '@/store/useCartStore';
+import Link from 'next/link';
 
 export default function CartPage() {
 
@@ -55,7 +56,7 @@ export default function CartPage() {
                 <div className="flex items-center gap-3">
                   <button 
                     className="w-8 h-8 flex items-center justify-center rounded-md bg-zinc-600 hover:bg-zinc-700 transition"
-                    onClick={() => addItem({product: item.product, quantity: -1})}
+                    onClick={() => ((item.quantity - 1) === 0) ? removeItem(item.product.id) : addItem({product: item.product, quantity: -1})}
                   >
                     -
                   </button>
@@ -77,12 +78,11 @@ export default function CartPage() {
             ))}
 
           </div>
-
-          <div className="mt-6">
-            <button className="text-sm text-indigo-400 hover:text-indigo-300 transition">
-              ← Continue Shopping
-            </button>
-          </div>
+          <Link href={'/products'}>
+              <p className="mt-6 text-sm text-indigo-400 hover:text-indigo-300 transition">
+                ← Continue Shopping
+              </p>
+          </Link>
         </div>
 
         {/* RIGHT SIDE - ORDER SUMMARY */}
