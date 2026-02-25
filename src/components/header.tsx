@@ -1,11 +1,9 @@
 import Link from "next/link";
 import { User } from "lucide-react";
 import BackButton from "./backButton";
-import { getSession } from "@/lib/auth";
 import CartButton from "./cartButton";
 
 async function Header() {  
-  const session = await getSession()
   
   return (
     <header className="mb-6 flex items-center gap-4 py-4 border-b-2">
@@ -28,15 +26,7 @@ async function Header() {
             <CartButton/>
 
             {/* user icon */}
-            <Link href={{
-              pathname: '/profile',
-              query: { 
-                name: session?.name,
-                email: session?.email,
-                role: session?.role,
-                avatar: session?.avatar
-              },
-            }}>
+            <Link href={'/profile'}>
               <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center shadow-lg hover:bg-zinc-600">
                   <User size={21}/>
               </div>
@@ -44,7 +34,6 @@ async function Header() {
           </div>
         </div>
       </div>
-
     </header>
   );
 }

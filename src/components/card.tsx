@@ -11,9 +11,10 @@ import { useProductStore } from "@/store/useProductStore";
 type Props = {
     product: Product
     titleStyle?: string
+    isAdmin: boolean
 }
 
-function Card({ product, titleStyle }: Props){
+function Card({ product, titleStyle, isAdmin }: Props){
 
     const {
         addItem,
@@ -23,22 +24,17 @@ function Card({ product, titleStyle }: Props){
         clearProducts
     } = useProductStore()
 
-    // useEffect(() => {
-    //     console.log(items)
-    //     console.log(total)
-    // }, [total])
-
     function onClickAdd(e: MouseEvent<HTMLButtonElement | HTMLSpanElement>){
         e.preventDefault()
         e.stopPropagation()
         addItem({product, quantity: 1})
     }
 
-    function onClickDelete (e: MouseEvent<HTMLButtonElement | HTMLSpanElement>) {
+    async function onClickDelete (e: MouseEvent<HTMLButtonElement | HTMLSpanElement>) {
         e.preventDefault()
         e.stopPropagation()
-        axios.delete(`https://api.escuelajs.co/api/v1/products/${product.id}`)
-        clearProducts
+        await axios.delete(`https://api.escuelajs.co/api/v1/products/${product.id}`)
+        clearProducts()
     }
     return <>
         <div className="border rounded-lg p-6 m-4">
@@ -53,24 +49,29 @@ function Card({ product, titleStyle }: Props){
                 <div className="flex gap-2">
                     <button
                         onClick= {onClickAdd}
-                        className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-950 transition-transform hover:scale-110 active:scale-95"
+                        className="cursor-pointer flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-950 transition-transform hover:scale-110 active:scale-95"
                     >
                         <Plus className="h-5 w-5"/>
                     </button>
 
-                    <Link
-                        href={`/add-product/${product.id}`} 
-                        className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-950 transition-transform hover:scale-110 active:scale-95"
-                    >
-                        <Pencil className="h-5 w-5"/>
-                    </Link>
+                    {isAdmin && (
+                        <>
+                            <Link
+                                href={`/add-product/${product.id}`} 
+                                className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-950 transition-transform hover:scale-110 active:scale-95"
+                                >
+                                <Pencil className="h-5 w-5"/>
+                            </Link>
+
+                            <button
+                                className="cursor-pointer flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-950 transition-transform hover:scale-110 active:scale-95"
+                                onClick={onClickDelete}
+                                >
+                                <Trash2 className="h-5 w-5"/>
+                            </button>
+                        </>
+                    )}
                     
-                    <button
-                        className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-950 transition-transform hover:scale-110 active:scale-95"
-                        onClick={onClickDelete}
-                    >
-                        <Trash2 className="h-5 w-5"/>
-                    </button>
                 </div>
             </div>
         </div>

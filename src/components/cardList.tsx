@@ -53,7 +53,7 @@ function CardList({isAdmin}: CardListProps) {
                             href={`/products/${product.slug}/${product.id}`}
                             className="hover:scale-105 transition"
                         >
-                            <Card product={product} titleStyle="line-clamp-1"/>
+                            <Card product={product} titleStyle="line-clamp-1" isAdmin={isAdmin}/>
                         </Link>
                     ))}
                 </div>

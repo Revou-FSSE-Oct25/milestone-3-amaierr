@@ -80,6 +80,11 @@ function SignupPage() {
               peer-focus:text-white">
               Email
             </label>
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           {/* PASSWORD */}
@@ -105,6 +110,11 @@ function SignupPage() {
               peer-focus:text-white">
               Password
             </label>
+            {errors.password && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           {/* CONFIRM PASSWORD */}

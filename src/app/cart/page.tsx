@@ -13,10 +13,6 @@ export default function CartPage() {
     removeItem
   } = useCartStore()
 
-  // useEffect(() => {
-  //   console.log(items)
-  // }, [addItem, items])
-
   return (
     <div className="min-h-screen text-zinc-200 px-6 py-12">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
